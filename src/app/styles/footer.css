@@ -1,0 +1,10 @@
+.Footer {
+  display: flex;
+}
+.Footer h1 {
+  font-size: small;
+}
+.Footer h2 {
+  font-size: small;
+  color: blue;
+}
