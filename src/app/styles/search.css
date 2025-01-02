@@ -44,6 +44,7 @@
   font-size: 14px;
   line-height: 18px;
   color: #71717a;
+  outline-color: rgb(38, 38, 253);
 }
 .Search button {
   width: 59px;
@@ -69,7 +70,8 @@
   width: 345px;
   height: 32px;
 }
-.activebutton {
+#activebutton {
+  color: white;
   background: #3c82f6;
   border: 0;
 }
@@ -133,4 +135,53 @@
   font-weight: 505;
   font-size: 14px;
   line-height: 16.94px;
+}
+.completed {
+  display: flex;
+  width: 345px;
+  height: 17px;
+  justify-content: space-between;
+  padding-top: 16px;
+  margin-bottom: 40px;
+  border-top: 1px solid #e5e7eb;
+}
+.completed p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16.94px;
+  text-align: left;
+  text-decoration-skip-ink: none;
+  color: #6b7280;
+}
+.completed button {
+  width: 109px;
+  height: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-align: left;
+  text-decoration-skip-ink: none;
+  background-color: white;
+  border: none;
+  color: #ef4444;
+}
+.arildag {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 501;
+  line-height: 15.94px;
+  text-align: center;
+  text-decoration-skip-ink: none;
+  color: #6b7280;
+  margin-bottom: 40px;
+}
+#search {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.compled {
+  text-decoration: line-through;
 }

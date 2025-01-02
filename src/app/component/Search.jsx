@@ -5,10 +5,12 @@ import "../styles/search.css";
 
 export default function () {
   const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState("");
+  const [newTodo, setNewTodo] = useState([]);
 
   const addTodoHandler = () => {
-    setTodos([...todos, newTodo]);
+    newTodo.length == 0
+      ? alert("please enter a text")
+      : setTodos([...todos, { title: newTodo, isCompleted: false }]);
   };
 
   const [buttonClassAll, setButtonClassAll] = useState("activebutton");
@@ -32,6 +34,25 @@ export default function () {
     setButtonClassAll("offline");
     setButtonClassComplete("complete");
   };
+  function deleteHandler(index) {
+    const garbage = todos.filter((todo, idx) => idx != index);
+    const isConfirmed = confirm("Are you sure you want to delete this task?");
+    if (isConfirmed == true) {
+      setTodos(garbage);
+    } else {
+    }
+  }
+
+  const toggleIsCompleted = (event) => {
+    let changedTodos = todos.map((t) => {
+      if (t.todo === event.todo) {
+        t.isCompleted = !t.isCompleted;
+      }
+      return t;
+    });
+    setTodos(changedTodos);
+  };
+
   return (
     <div className="Container">
       <div className="todo">
@@ -39,7 +60,8 @@ export default function () {
       </div>
       <div className="Search">
         <input
-          type=""
+          value={newTodo}
+          type="text"
           placeholder="Add a new task..."
           name=""
           id=""
@@ -61,21 +83,43 @@ export default function () {
         <button
           id={buttonClassComplete}
           onClick={handleoffline}
-          className="complete"
+          className={"complete"}
         >
           Completed
         </button>
       </div>
-      <div>
-        {todos.map((todo) => {
+      <div id="search">
+        {todos.map((todo, index) => {
           return (
-            <div className="checkbox">
-              <input type="checkbox" name="" id="" />
-              <p>{todo}</p>
-              <button>Delete</button>
+            <div key={index} className="checkbox">
+              <input
+                onChange={() => toggleIsCompleted(todo)}
+                type="checkbox"
+                name=""
+                id=""
+                checked={todo.isCompleted}
+              />
+              <p className={todo.isCompleted ? "compled" : ""}>{todo.title} </p>
+              <button
+                onClick={() => {
+                  deleteHandler(index);
+                }}
+              >
+                Delete
+              </button>
             </div>
           );
         })}
+      </div>
+      <div>
+        {todos.length ? (
+          <div className="completed">
+            <p>tasks completed</p>
+            <button>Clear completed</button>
+          </div>
+        ) : (
+          <p className="arildag">No tasks yet. Add one above</p>
+        )}
       </div>
     </div>
   );

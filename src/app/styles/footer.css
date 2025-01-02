@@ -1,10 +1,16 @@
 .Footer {
   display: flex;
+  width: 345px;
+  height: 15px;
+  margin: auto;
+  justify-content: center;
+  gap: 5px;
 }
 .Footer h1 {
   font-size: small;
+  color: #6b7280;
 }
 .Footer h2 {
   font-size: small;
-  color: blue;
+  color: #3b73ed;
 }
