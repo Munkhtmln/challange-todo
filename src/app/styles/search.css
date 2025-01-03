@@ -64,15 +64,18 @@
   color: #f9f9f9;
   text-decoration-skip-ink: none;
 }
+.Search button:hover {
+  cursor: pointer;
+}
 .buttons {
   display: flex;
   gap: 6px;
   width: 345px;
   height: 32px;
 }
-#activebutton {
+.activebutton {
   color: white;
-  background: #3c82f6;
+  background: #3c82f6 !important;
   border: 0;
 }
 .all {
@@ -136,6 +139,9 @@
   font-size: 14px;
   line-height: 16.94px;
 }
+.checkbox button:hover {
+  cursor: pointer;
+}
 .completed {
   display: flex;
   width: 345px;
@@ -166,6 +172,9 @@
   background-color: white;
   border: none;
   color: #ef4444;
+}
+.completed button:hover {
+  cursor: pointer;
 }
 .arildag {
   font-family: Arial, Helvetica, sans-serif;

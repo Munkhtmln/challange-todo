@@ -11,47 +11,75 @@ export default function () {
     newTodo.length == 0
       ? alert("please enter a text")
       : setTodos([...todos, { title: newTodo, isCompleted: false }]);
+
+    setNewTodo("");
   };
 
-  const [buttonClassAll, setButtonClassAll] = useState("activebutton");
-  const [buttonClassActive, setButtonClassActive] = useState("offline");
-  const [buttonClassComplete, setButtonClassComplete] = useState("online");
+  const [activeFilter, setActiveFilter] = useState("all");
 
-  const handleonline = () => {
-    setButtonClassActive("online");
-    setButtonClassAll("activebutton");
-    setButtonClassComplete("complete");
+  const handleFilter = (filter) => {
+    setActiveFilter(filter);
   };
+  // const [buttonClassAll, setButtonClassAll] = useState("activebutton");
+  // const [buttonClassActive, setButtonClassActive] = useState("offline");
+  // const [buttonClassComplete, setButtonClassComplete] = useState("online");
 
-  const handleoffline = () => {
-    setButtonClassActive("online");
-    setButtonClassAll("offline");
-    setButtonClassComplete("activebutton");
-  };
+  // const handleonline = () => {
+  //   setButtonClassActive("online");
+  //   setButtonClassAll("activebutton");
+  //   setButtonClassComplete("offline");
+  // };
 
-  const handleActive = () => {
-    setButtonClassActive("activebutton");
-    setButtonClassAll("offline");
-    setButtonClassComplete("complete");
-  };
+  // const handleoffline = () => {
+  //   setButtonClassActive("online");
+  //   setButtonClassAll("offline");
+  //   setButtonClassComplete("activebutton");
+  // };
+
+  // const handleActive = () => {
+  //   setButtonClassActive("activebutton");
+  //   setButtonClassAll("offline");
+  //   setButtonClassComplete("online");
+  // };
   function deleteHandler(index) {
-    const garbage = todos.filter((todo, idx) => idx != index);
     const isConfirmed = confirm("Are you sure you want to delete this task?");
-    if (isConfirmed == true) {
-      setTodos(garbage);
-    } else {
+    if (isConfirmed) {
+      todos.splice(index, 1);
+      setTodos([...todos]);
     }
   }
 
-  const toggleIsCompleted = (event) => {
-    let changedTodos = todos.map((t) => {
-      if (t.todo === event.todo) {
-        t.isCompleted = !t.isCompleted;
-      }
-      return t;
-    });
+  const clearCompleted = (index) => {
+    const clearcomfirmed = confirm("Are you sure you want to clear tasks?");
+    if (clearcomfirmed == true) {
+      setTodos([]);
+    } else {
+    }
+  };
+
+  const filteredTasks = todos.filter((task) => {
+    if (activeFilter === "active") return !task.isCompleted;
+    if (activeFilter === "completed") return task.isCompleted;
+    return true;
+  });
+
+  const toggleIsCompleted = (index) => {
+    const changedTodos = todos.map((t, i) =>
+      i === todos.findIndex((todo) => todo === filteredTasks[index])
+        ? { ...t, isCompleted: !t.isCompleted }
+        : t
+    );
     setTodos(changedTodos);
   };
+  // const toggleIsCompleted = (index) => {
+  //   let changedTodos = todos.map((t, idx) => {
+  //     if (idx === index) {
+  //       t.isCompleted = !t.isCompleted;
+  //     }
+  //     return t;
+  //   });
+  //   setTodos(changedTodos);
+  // };
 
   return (
     <div className="Container">
@@ -70,30 +98,35 @@ export default function () {
         <button onClick={addTodoHandler}>Add</button>
       </div>
       <div className="buttons">
-        <button id={buttonClassAll} onClick={handleonline} className="all">
+        <button
+          onClick={() => handleFilter("all")}
+          className={`all ${activeFilter === "all" ? "activebutton" : ""}`}
+        >
           All
         </button>
         <button
-          id={buttonClassActive}
-          onClick={handleActive}
-          className="active"
+          onClick={() => handleFilter("active")}
+          className={`active ${
+            activeFilter === "active" ? "activebutton" : ""
+          }`}
         >
           Active
         </button>
         <button
-          id={buttonClassComplete}
-          onClick={handleoffline}
-          className={"complete"}
+          onClick={() => handleFilter("completed")}
+          className={`complete ${
+            activeFilter === "completed" ? "activebutton" : ""
+          }`}
         >
           Completed
         </button>
       </div>
       <div id="search">
-        {todos.map((todo, index) => {
+        {filteredTasks.map((todo, index) => {
           return (
             <div key={index} className="checkbox">
               <input
-                onChange={() => toggleIsCompleted(todo)}
+                onChange={() => toggleIsCompleted(index)}
                 type="checkbox"
                 name=""
                 id=""
@@ -114,8 +147,11 @@ export default function () {
       <div>
         {todos.length ? (
           <div className="completed">
-            <p>tasks completed</p>
-            <button>Clear completed</button>
+            <p>
+              {todos.filter((todo) => todo.isCompleted).length} of{" "}
+              {todos.length} tasks completed
+            </p>
+            <button onClick={clearCompleted}>Clear completed</button>
           </div>
         ) : (
           <p className="arildag">No tasks yet. Add one above</p>
